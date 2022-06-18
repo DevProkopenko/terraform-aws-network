@@ -1,9 +1,9 @@
 #--------------------------------------------------------------------------------
 terraform {
   backend "s3" {
-    bucket = "prokopenko-artsiom-terraform-bucket" // Bucket where to SAVE Terraform State
-    key    = "dev/network/terraform.tfstate"       // Object name in the bucket to SAVE Terraform State
-    region = "eu-central-1"                        // Region where bycket created
+    bucket = "terraform-aws-pro-art"         // Bucket where to SAVE Terraform State
+    key    = "dev/network/terraform.tfstate" // Object name in the bucket to SAVE Terraform State
+    region = "eu-central-1"                  // Region where bycket created
   }
 }
 
