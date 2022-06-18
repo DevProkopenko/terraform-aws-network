@@ -1,15 +1,6 @@
-#--------------------------------------------------------------------------------
-terraform {
-  backend "s3" {
-    bucket = "terraform-aws-pro-art"         // Bucket where to SAVE Terraform State
-    key    = "dev/network/terraform.tfstate" // Object name in the bucket to SAVE Terraform State
-    region = "eu-central-1"                  // Region where bycket created
-  }
-}
-
 #----------------------------------------------------------------------------------
 data "aws_availability_zones" "available" {}
-#----------------------------------------------------------------------------------
+#--------------------------vpc-----------------------------------------------
 
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
@@ -23,7 +14,7 @@ resource "aws_internet_gateway" "main" {
     Name = "${var.env}-igw"
   }
 }
-
+#-------------------------public_subnets---------------------------------------
 resource "aws_subnet" "public_subnets" {
   count                   = length(var.public_subnet_cidrs)
   vpc_id                  = aws_vpc.main.id
@@ -51,7 +42,7 @@ resource "aws_route_table_association" "public_routes" {
   route_table_id = aws_route_table.public_subnets.id
   subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
 }
-#----------------------------------------------------------------------------------
+#--------------------------aws_nat_gateway-------------------------------------
 resource "aws_eip" "nat" {
   count = length(var.private_subnet_cidrs)
   vpc   = true
@@ -69,7 +60,7 @@ resource "aws_nat_gateway" "nat" {
   }
 }
 
-#-------------------------------------------------------------------------------
+#--------------------------private_subnets----------------------------------
 resource "aws_subnet" "private_subnets" {
   count             = length(var.private_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
