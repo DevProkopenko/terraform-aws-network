@@ -15,13 +15,3 @@ resource "aws_s3_bucket_versioning" "example" {
     status = "Enabled"
   }
 }
-resource "aws_dynamodb_table" "bucket" {
-  name         = var.bucket
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
