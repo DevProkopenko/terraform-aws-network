@@ -3,7 +3,6 @@
 data "aws_availability_zones" "available" {}
 #--------------------------vpc--------------------------------------------------
 resource "aws_vpc" "main" {
-  default = true
   cidr_block = var.vpc_cidr
   tags = {
     Name = "${var.env}-VPC"
