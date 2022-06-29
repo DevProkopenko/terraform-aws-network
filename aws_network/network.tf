@@ -83,10 +83,3 @@ resource "aws_route_table_association" "private_routes" {
   subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
 }
 #-------------------------------------------------------------------------------
-terraform {
-  backend "s3" {
-    bucket = "prokopenko-artsiom-terraform-bucket"
-    key    = "dev/network/terraform.tfstate"
-    region = "eu-west-1"
-  }
-}
