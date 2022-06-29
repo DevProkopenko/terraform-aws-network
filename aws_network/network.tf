@@ -2,10 +2,10 @@
 #-------------------------------------------------------------------------------
 data "aws_availability_zones" "available" {}
 #--------------------------vpc--------------------------------------------------
-resource "aws_vpc" "main" {
+resource "aws_default_vpc" "main" {
   cidr_block = var.vpc_cidr
   tags = {
-    Name = "${var.env}-VPC"
+    Name = "Default VPC"
   }
 }
 resource "aws_internet_gateway" "main" {
@@ -26,7 +26,7 @@ resource "aws_subnet" "public_subnets" {
   }
 }
 resource "aws_route_table" "public_subnets" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_default__vpc.main.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
@@ -59,7 +59,7 @@ resource "aws_nat_gateway" "nat" {
 #--------------------------private_subnets--------------------------------------
 resource "aws_subnet" "private_subnets" {
   count             = length(var.private_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_default_vpc.main.id
   cidr_block        = element(var.private_subnet_cidrs, count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]
   tags = {
