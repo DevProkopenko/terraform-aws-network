@@ -25,3 +25,11 @@ resource "aws_dynamodb_table" "bucket" {
     type = "S"
   }
 }
+terraform {
+  backend "s3" {
+    bucket = var.bucket
+    key    = "dev/bucket/terraform.tfstate"
+    region = "eu-central-1"
+    depends_on = [aws_s3_bucket.example]
+  }
+}
