@@ -1,3 +1,3 @@
-variable "bucket_name" {
-  default = "prokopenko-artsiom-terraform-bucket"
+variable "bucket" {
+   description = "prokopenko-artsiom-terraform-bucket-123456"
 }
