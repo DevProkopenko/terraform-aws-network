@@ -1,3 +1,3 @@
 variable "bucket" {
-   description = "prokopenko-artsiom-terraform-bucket-123456"
+   description = "prokopenko-artsiom-terraform-bucket"
 }
