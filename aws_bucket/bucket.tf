@@ -30,6 +30,5 @@ terraform {
     bucket = var.bucket
     key    = "dev/bucket/terraform.tfstate"
     region = "eu-central-1"
-    depends_on = [aws_s3_bucket.example]
   }
 }
